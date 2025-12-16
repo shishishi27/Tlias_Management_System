@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+
 LABEL authors="shishishi"
 
 RUN apt update && apt install -y wget locales && \

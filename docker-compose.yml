@@ -1,4 +1,3 @@
-
 networks:
   tlias-network:
     name: tlias-net
