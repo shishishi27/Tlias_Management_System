@@ -1,0 +1,49 @@
+
+networks:
+  tlias-network:
+    name: tlias-net
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - "/data/tlias/mysql/conf:/etc/mysql/conf.d"
+      - "/data/tlias/mysql/data:/var/lib/mysql"
+      - "/data/tlias/mysql/init:/docker-entrypoint-initdb.d"
+    networks:
+      - tlias-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tlias-server
+    networks:
+      - tlias-network
+    environment:
+      - OSS_ACCESS_KEY_ID=${OSS_ACCESS_KEY_ID}
+      - OSS_ACCESS_KEY_SECRET=${OSS_ACCESS_KEY_SECRET}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:1.28.0
+    container_name: tlias-nginx
+    networks:
+      - tlias-network
+    ports:
+      - "80:80"
+    volumes:
+      - "/data/tlias/nginx/html:/usr/share/nginx/html"
+      - "/data/tlias/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+    depends_on:
+      - app
+
