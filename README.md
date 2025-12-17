@@ -2,9 +2,13 @@
 Tlias管理系统项目采用Spring框架构建，提供登录、部门管理、员工管理、员工工作经历管理、权限管理、数据同步等功能。
 
 ### 软件架构
+
 后端：Java + Spring Boot + Spring MVC + Maven   
-前端：Vue + ElementPlus + Axios
+
+前端：Javascript + Vue + ElementPlus + Axios
+
 数据库：MySQL + MyBatis
+
 部署：阿里云服务器 + Docker + Nginx 
 
 ### 架构设计与依赖管理：
